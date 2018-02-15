@@ -34,7 +34,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - good food & well organized
 --
 
-- Kraig got to fan out on Hadley
+- San Diego is pretty cool
 --
 
 - hex stickers!
@@ -43,11 +43,24 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ---
 
-## Asynchronous Operations in Shiny
+## Opening Keynote
 
+Di Cook, advisor to Hadley & Yihui
 --
 
-- Joe Cheng, CTO @ rstudio & creator of Shiny
+- `ggplot2` not only user-friendly, but enables plots as another statistic
+--
+
+- key takeaway: embed _true_ plot among _permuted_ plots and see if others can pick out the true plot
+--
+
+- [slides](http://www.dicook.org/files/rstudio/)
+
+---
+
+## Asynchronous Operations in Shiny
+
+Joe Cheng, CTO @ rstudio & creator of Shiny
 --
 
 - what happens if you run a model in an app, and someone else tries to connect?
@@ -59,14 +72,15 @@ knitr::opts_chunk$set(echo = TRUE)
     - requires support in shiny itself, currently on [`shiny` branch](https://github.com/rstudio/shiny/tree/async)
 --
 - not specific to shiny
+--
+
+- [slides](https://speakerdeck.com/jcheng5/r-promises)
 
 ---
 
 ## Functional Testing in Shiny
 
---
-
-- Winston Chang talking about [`shinytest`](https://github.com/rstudio/shinytest)
+Winston Chang talking about [`shinytest`](https://github.com/rstudio/shinytest)
 --
 
 - functional testing using a headless browser
@@ -88,68 +102,41 @@ knitr::opts_chunk$set(echo = TRUE)
 --
 
 - already has an [rstudio page](https://rstudio.github.io/shinytest/articles/shinytest.html)
+--
+
+- [slides](https://github.com/rstudio/rstudio-conf/blob/master/2018/Shinytest-Winston_Chang/2018-02-02-RStudioConf-shinytest.pdf)
 
 ---
 
 ## Scaling Shiny
 
---
-
-- Sean Lopp, software dev @ RStudio
+Sean Lopp, software dev @ RStudio
 --
 
 - demonstrated scaling a shiny app to to 10,001 concurrent users!
 --
 
 - built on AWS
-    - multiple RStudio Connect servers on EC2
-    - ALB Load Balancer
-    - Postgres DB's
+    - RDS, ALB, EFS, ASG (auto-scaling groups)
+    - RStudio Connect cluster in the ASG
 --
 - other tools used
     - Prometheus & Grafana for metrics
     - Fabric (python) for orchestrating the whole thing
 --
 - new, unreleased `shinyloadtest` tool to fake users
-    - should be able to support ~1k on a laptop
-
----
-
-## Drill-Down Reporting in Shiny
-
+    - very efficient: should be able to support ~1k connections from a laptop
 --
-
-- Barbara Borges Ribeiro (`pool`!)
---
-
-- didn't go, but sounded cool
---
-
-- ask Kraig
+- [slides](https://github.com/slopp/shinyloadtest-results/blob/master/slides.pdf)
 
 ---
 
 ## Modeling in the Tidyverse
 
+Max Kuhn, Applied Predictive Modeling, `caret` package, RStudio
 --
 
-- Max Kuhn, Applied Predictive Modeling & `caret` package
-    - employee of RStudio since last fall
---
 - `modelr` is dead!
---
-
-- packages that already exist
-    - [`rsample`](https://github.com/topepo/rsample) for setting up bootstrap, CV, etc.
-    - [`recipes`]() for preprocessing (scaling, centering, etc.)
-    - [`tidyposterior`](https://github.com/topepo/tidyposterior) for post-hoc analysis of model stats
-    - [`yardstick`](https://github.com/topepo/yardstick) for computing model metrics
-    - [`parsnip`](https://github.com/topepo/parsnip) for unified model interface
-
----
-
-## Modeling in the Tidyverse
-
 --
 
 - Max is clearly embracing the pipeline concept (smells like `sklearn`)
@@ -160,17 +147,84 @@ knitr::opts_chunk$set(echo = TRUE)
     - don't worry about `randomForest` vs. `ranger` vs. `sparklyr::ml_random_forest` vs. ...
 --
 - After he nails down some interface/syntax stuff, everything else will come quickly
+
+---
+
+## Modeling in the Tidyverse
+
 --
 
+- packages that already exist
+    - [`rsample`](https://github.com/topepo/rsample) for setting up bootstrap, CV, etc.
+    - [`recipes`](https://github.com/topepo/recipes) for preprocessing (scaling, centering, etc.)
+    - [`tidyposterior`](https://github.com/topepo/tidyposterior) for post-hoc analysis of model stats
+    - [`yardstick`](https://github.com/topepo/yardstick) for computing model metrics
+    - [`parsnip`](https://github.com/topepo/parsnip) for unified model interface
+--
 - Slides available on [Github](https://github.com/topepo/rstudio-conf) ([rawgit](https://cdn.rawgit.com/topepo/rstudio-conf/a6d9176bdc62f38c7d6773a8bcc2e6f1d4399536/2018/Modeling_in_the_Tidyverse--Max_Kuhn/Modeling_in_the_Tidyverse.html#1))
+
+---
+
+## Machine Learning with R & Tensorflow
+
+J.J. Allaire, founder & CEO @ RStudio
+--
+
+- been in a cave the last couple years wrapping many TF tools for R
+--
+
+- 3 levels of API to TF
+    - low: [`tensorflow`](https://tensorflow.rstudio.com/tensorflow/)
+    - medium: [`tfestimators`](https://tensorflow.rstudio.com/tfestimators/)
+    - high: [`Keras`](https://keras.rstudio.com/)
+--
+- several others like [`tfdatasets`](https://tensorflow.rstudio.com/tools/tfdatasets/) and [`tfruns`](https://tensorflow.rstudio.com/tools/tfruns/)
+--
+
+- worked with Francois Chollet to make an R version of [Francois' deep learning book](https://www.manning.com/books/deep-learning-with-r)
+--
+
+- this is why [`reticulate`](https://github.com/rstudio/reticulate) exists; always wrapping python because TF's C++ API doesn't expose the good stuff
+--
+
+- [`Greta`](https://greta-dev.github.io/greta/) is a STAN-like MCMC library in R built on TensorFlow (not from RStudio)
+--
+
+- [slides](https://beta.rstudioconnect.com/ml-with-tensorflow-and-r/)
+
+---
+
+## CloudML
+
+--
+
+- [CloudML](https://cloud.google.com/ml-engine/) is google's managed TF-model service to make it all easier
+    - training, tuning, deployment, etc.
+--
+- R package [`cloudml`](https://tensorflow.rstudio.com/tools/cloudml/articles/getting_started.html)
+    - claimed this wrapper is far more feature-complete than anything in any other language (including python!)
+
+---
+
+## TF Deploy
+
+Javier Luraschi, RStudio
+
+--
+
+- [`tfdeploy` package](https://tensorflow.rstudio.com/tools/tfdeploy/articles/introduction.html) helps deploy trained TF models to many places
+    - TF Serving, CloudML, RStudio Connect
+--
+- even better, he used [`keras-js`](https://github.com/transcranial/keras-js) + `xaringan` to deploy a trained model _inside his slides_!
+--
+
+- [slides](https://rpubs.com/jluraschi/deploying-tensorflow-rstudio-conf)
 
 ---
 
 ## Zeallot
 
---
-
-- Nathan Teetor talking about his [`zeallot`](https://github.com/nteetor/zeallot) package
+Nathan Teetor talking about his [`zeallot`](https://github.com/nteetor/zeallot) package
 --
 
 - offers python-like value unpacking on LHS of assignment
@@ -190,7 +244,23 @@ c(mpg, ...rest) %<-% mtcars
 - easy to implement your own "destructor" for custom objects (demonstrated with `quosures`)
 --
 
-- slides available via [Google Docs](https://docs.google.com/presentation/d/1MISSEW5-JIulvjsmGETsdLWrgXoncFhb2i2E65KXwi0/edit?usp=sharing)
+- [slides](https://docs.google.com/presentation/d/1MISSEW5-JIulvjsmGETsdLWrgXoncFhb2i2E65KXwi0/edit?usp=sharing)
+
+---
+
+## Stuff I missed
+
+- Drill-Down Reporting in Shiny
+    - Barbara Borges Ribeiro, RStudio, `pool`
+    - Tableau-like click-through modals in Shiny
+    - [slides](https://rawgit.com/bborgesr/rstudio-conf-2018/master/presentation/presentation.html)
+--
+- [`infer`](http://infer.netlify.com/)
+    - tidyverse-friendly framework for hypothesis testing
+--
+- Understanding PCA on Stack Overflow data
+    - Julia Silge, Stack Overflow, `tidytext`
+    - [slides](https://speakerdeck.com/juliasilge/understanding-principal-component-analysis-using-stack-overflow-data)
 
 ---
 class: center, middle
